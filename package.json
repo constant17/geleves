@@ -2,6 +2,13 @@
   "name": "no-name",
   "license": "UNLICENSED",
   "dependencies": {
+    "@fullcalendar/core": "5.10.1",
+    "@fullcalendar/daygrid": "5.10.1",
+    "@fullcalendar/interaction": "5.10.1",
+    "@fullcalendar/list": "5.10.1",
+    "@fullcalendar/moment": "5.10.1",
+    "@fullcalendar/moment-timezone": "5.10.1",
+    "@fullcalendar/timegrid": "5.10.1",
     "@polymer/iron-a11y-announcer": "3.0.2",
     "@polymer/iron-icon": "3.0.1",
     "@polymer/iron-iconset-svg": "3.0.1",
@@ -121,7 +128,9 @@
     "construct-style-sheets-polyfill": "3.0.4",
     "date-fns": "2.23.0",
     "lit": "2.0.0",
-    "lumo-css-framework": "^4.0.10"
+    "lumo-css-framework": "^4.0.10",
+    "moment": "2.29.1",
+    "moment-timezone": "0.5.32"
   },
   "devDependencies": {
     "@vaadin/application-theme-plugin": "./target/plugins/application-theme-plugin",
@@ -151,6 +160,13 @@
   },
   "vaadin": {
     "dependencies": {
+      "@fullcalendar/core": "5.10.1",
+      "@fullcalendar/daygrid": "5.10.1",
+      "@fullcalendar/interaction": "5.10.1",
+      "@fullcalendar/list": "5.10.1",
+      "@fullcalendar/moment": "5.10.1",
+      "@fullcalendar/moment-timezone": "5.10.1",
+      "@fullcalendar/timegrid": "5.10.1",
       "@polymer/iron-a11y-announcer": "3.0.2",
       "@polymer/iron-icon": "3.0.1",
       "@polymer/iron-iconset-svg": "3.0.1",
@@ -269,7 +285,9 @@
       "construct-style-sheets-polyfill": "3.0.4",
       "date-fns": "2.23.0",
       "lit": "2.0.0",
-      "lumo-css-framework": "^4.0.10"
+      "lumo-css-framework": "^4.0.10",
+      "moment": "2.29.1",
+      "moment-timezone": "0.5.32"
     },
     "devDependencies": {
       "chokidar": "^3.5.0",
@@ -293,6 +311,6 @@
       "workbox-precaching": "6.4.2",
       "workbox-webpack-plugin": "6.4.2"
     },
-    "hash": "af7f90a279aae233f74e73de916066e9beb9fbcee99de7234142a28379a97dac"
+    "hash": "b2bd17bad42367af2cfa12b8766894dd34a8e57c932ec605f6fc762ea7cb398e"
   }
 }

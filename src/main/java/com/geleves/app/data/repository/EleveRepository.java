@@ -9,8 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface EleveRepository extends JpaRepository<Eleve, Integer> {
 
-	  @Query("select e from Eleve e " +
+	  @Query("select e from Acteur e " +
 		        "where lower(e.prenom) like lower(concat('%', :searchTerm, '%')) " +
 		        "or lower(e.nom) like lower(concat('%', :searchTerm, '%'))")
 		    List<Eleve> search(@Param("searchTerm") String searchTerm);
+	  
 }

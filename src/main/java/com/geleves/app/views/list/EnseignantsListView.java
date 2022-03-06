@@ -1,6 +1,6 @@
 package com.geleves.app.views.list;
 
-import com.geleves.app.data.entity.Parent;
+import com.geleves.app.data.entity.Enseignant;
 import com.geleves.app.data.service.GelevesService;
 import com.geleves.app.views.MainLayout;
 import com.vaadin.flow.component.Html;
@@ -24,28 +24,28 @@ import javax.annotation.security.PermitAll;
 
 @Component
 @Scope("prototype")
-@Route(value="parents", layout = MainLayout.class)
-@PageTitle("Parents | Geleves")
+@Route(value="enseignants", layout = MainLayout.class)
+@PageTitle("Enseignants | Geleves")
 @PermitAll
 
-public class ParentsListView extends VerticalLayout {
-    Grid<Parent> grid = new Grid<>(Parent.class);
+public class EnseignantsListView extends VerticalLayout {
+    Grid<Enseignant> grid = new Grid<>(Enseignant.class);
     TextField filterText = new TextField();
-    ParentForm form;
+    EnseignantForm form;
     GelevesService service;
     ConfirmDialog warningDialog;
 
-    public ParentsListView(GelevesService service) {
+    public EnseignantsListView(GelevesService service) {
         this.service = service;
         addClassName("list-view");
         setSizeFull();
         configureGrid();
 
-        form = new ParentForm(service.findAllEleves(""));
+        form = new EnseignantForm();
         form.setWidth("25em");
-        form.addListener(ParentForm.SaveEvent.class, this::saveParent);
-        form.addListener(ParentForm.DeleteEvent.class, this::deleteParent);
-        form.addListener(ParentForm.CloseEvent.class, e -> closeEditor());
+        form.addListener(EnseignantForm.SaveEvent.class, this::saveEnseignant);
+        form.addListener(EnseignantForm.DeleteEvent.class, this::deleteEnseignant);
+        form.addListener(EnseignantForm.CloseEvent.class, e -> closeEditor());
 
         FlexLayout content = new FlexLayout(grid, form);
         content.setFlexGrow(2, grid);
@@ -58,45 +58,45 @@ public class ParentsListView extends VerticalLayout {
         updateList();
         closeEditor();
         grid.asSingleSelect().addValueChangeListener(event ->
-            editParent(event.getValue()));
+            editEnseignant(event.getValue()));
     }
 
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("nom", "prenom", "contact", "address", "email", "nombreDEnfants");
+        grid.setColumns("nom", "prenom", "contact", "email", "nombreDeCours", "nombreDeClasses");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Rechercher un parent d'élève par son nom..");
+        filterText.setPlaceholder("Rechercher un enseignant par son nom..");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());
 
-        Button addEleveButton = new Button("Ajouter un parent d'élève");
-        addEleveButton.addClickListener(click -> addParent());
+        Button addEleveButton = new Button("Ajouter un enseignant");
+        addEleveButton.addClickListener(click -> addEnseignant());
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addEleveButton);
         toolbar.addClassName("toolbar");
         return toolbar;
     }
 
-    private void saveParent(ParentForm.SaveEvent event) {
-        service.saveParent(event.getParent());
+    private void saveEnseignant(EnseignantForm.SaveEvent event) {
+        service.saveEnseignant(event.getEnseignant());
         updateList();
         closeEditor();
-        Notification notification = Notification.show("Parent enregistré!");
+        Notification notification = Notification.show("Enseignant enregistré!");
         notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
-    private void deleteParent(ParentForm.DeleteEvent event) {
+    private void deleteEnseignant(EnseignantForm.DeleteEvent event) {
     	warningDialog = new ConfirmDialog();
-    	if(event.getParent().getNombreDEnfants() != 0) {
+    	if(event.getEnseignant().getNombreDeClasses()!= 0 || event.getEnseignant().getNombreDeCours()!= 0) {
     		
     		warningDialog.setHeader("Attention!");
     		warningDialog.setText(
-    		  new Html("<p>Le parent d'élève que vous voulez supprimer, a au moins un enfant inscrit et actif. "
+    		  new Html("<p>L'enseignant(e) que vous voulez supprimer, a au moins un cours ou une classe en charge."
     		  		+ "<br>Par consequent vous ne pouvez pas le/la supprimer.</p>")
     		);
 
@@ -107,8 +107,8 @@ public class ParentsListView extends VerticalLayout {
     	}
     	
     	warningDialog.setHeader("Confirmer La Suppression!");
-    	warningDialog.setText(new Html("<p>Vous &ecirc;tes sur le point de supprimer <b>"+event.getParent().toString()
-    			+"</b> de la liste des parents d'&eacute;l&egrave;ves inscrits. <br>Voulez-vous vraiment supprimer le parent?</p>"));
+    	warningDialog.setText(new Html("<p>Vous &ecirc;tes sur le point de supprimer <b>"+event.getEnseignant().toString()
+    			+"</b> de la liste des enseignants. <br>Voulez-vous vraiment supprimer le parent?</p>"));
 
     	warningDialog.setCancelable(true);
     	warningDialog.setCancelText("Annuler");
@@ -116,10 +116,10 @@ public class ParentsListView extends VerticalLayout {
     	warningDialog.setConfirmText("Supprimer");
     	
     	warningDialog.addConfirmListener(e -> {
-    		service.deleteParent(event.getParent());
+    		service.deleteEnseignant(event.getEnseignant());
             updateList();
             closeEditor();
-            Notification notification = Notification.show("Parent supprimé!");
+            Notification notification = Notification.show("Enseignant supprimé!");
             notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
             
     	});
@@ -128,29 +128,29 @@ public class ParentsListView extends VerticalLayout {
         
     }
 
-    public void editParent(Parent parent) {
-        if (parent == null) {
+    public void editEnseignant(Enseignant enseignant) {
+        if (enseignant == null) {
             closeEditor();
         } else {
-            form.setParent(parent);
+            form.setEnseignant(enseignant);
             form.setVisible(true);
             addClassName("editing");
         }
     }
 
-    void addParent() {
+    void addEnseignant() {
         grid.asSingleSelect().clear();
-        editParent(new Parent());
+        editEnseignant(new Enseignant());
     }
 
     private void closeEditor() {
-        form.setParent(null);
+        form.setEnseignant(null);
         form.setVisible(false);
         removeClassName("editing");
     }
 
     private void updateList() {
-        grid.setItems(service.findAllParents(filterText.getValue()));
+        grid.setItems(service.findAllEnseignants(filterText.getValue()));
     }
 
 

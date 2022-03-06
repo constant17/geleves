@@ -20,6 +20,9 @@ import com.vaadin.flow.router.PageTitle;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.security.PermitAll;
 
 
@@ -46,7 +49,9 @@ public class ElevesListView extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        form = new EleveForm(service.findAllParents(""));
+        List<String> statuts = Arrays.asList(new String[] {"Normal", "Redoublant", "Recalcitrant", "Transfere", "Suspendu"});
+        
+        form = new EleveForm(service.findAllParents(""), statuts);
         form.setWidth("25em");
         form.addListener(EleveForm.SaveEvent.class, this::saveEleve);
         form.addListener(EleveForm.DeleteEvent.class, this::deleteEleve);

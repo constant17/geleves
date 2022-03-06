@@ -30,7 +30,7 @@ public class EleveForm extends FormLayout {
   TextField addresse = new TextField("Addresse");
   DatePicker dateDeNaissance = new DatePicker("Date de naissance");
   TextField niveau = new TextField("Niveau");
-  TextField statut = new TextField("Statut");
+  ComboBox<String> statut = new ComboBox<>("Statut");
   
   ComboBox<Parent> parent = new ComboBox<>("Parent");
   
@@ -40,7 +40,7 @@ public class EleveForm extends FormLayout {
   Button delete = new Button("Supprimer");
   Button close = new Button("Annuler");
 
-  public EleveForm(List<Parent> parents) {
+  public EleveForm(List<Parent> parents, List<String> statuts) {
 	
     addClassName("eleve-form");
     binder.bindInstanceFields(this);
@@ -48,6 +48,8 @@ public class EleveForm extends FormLayout {
     DatePicker.DatePickerI18n singleFormatI18n = new DatePicker.DatePickerI18n();
 	singleFormatI18n.setDateFormat("dd-MM-yyyy");
 	dateDeNaissance.setI18n(singleFormatI18n);
+	
+	statut.setItems(statuts);
 	
     parent.setItems(parents);
     parent.setItemLabelGenerator(Parent::toString);

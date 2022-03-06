@@ -2,6 +2,7 @@ package com.geleves.app.views;
 
 import com.geleves.app.security.SecurityService;
 import com.geleves.app.views.list.ElevesListView;
+import com.geleves.app.views.list.EnseignantsListView;
 import com.geleves.app.views.list.ParentsListView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -49,10 +50,18 @@ public class MainLayout extends AppLayout {
         
         RouterLink parentsListLink = new RouterLink("Liste Des Parents", ParentsListView.class);
         parentsListLink.setHighlightCondition(HighlightConditions.sameLocation());
+        
+        RouterLink enseignantsListLink = new RouterLink("Liste Des Enseignants", EnseignantsListView.class);
+        enseignantsListLink.setHighlightCondition(HighlightConditions.sameLocation());
+        
+        RouterLink activitesLink = new RouterLink("Activites", ActiviteView.class);
+        activitesLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
             elevesListLink,
             parentsListLink,
+            enseignantsListLink,
+            activitesLink,
             new RouterLink("Dashboard", DashboardView.class)
         ));
     }
