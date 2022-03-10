@@ -69,6 +69,7 @@ public class EnseignantsListView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
+    	filterText.setWidth("24em");
         filterText.setPlaceholder("Rechercher un enseignant par son nom..");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);

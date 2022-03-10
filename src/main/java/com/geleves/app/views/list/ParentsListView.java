@@ -69,6 +69,7 @@ public class ParentsListView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
+    	filterText.setWidth("24em");
         filterText.setPlaceholder("Rechercher un parent d'élève par son nom..");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);

@@ -1,6 +1,7 @@
 package com.geleves.app.data.entity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -27,6 +28,12 @@ public class Activite extends AbstractEntity {
     
     @NotNull
     private LocalDate endingDate;
+    
+    @NotNull
+    private LocalTime startingTime;
+    
+    @NotNull
+    private LocalTime endingTime;
 
     @NotNull
     private String description;
@@ -93,6 +100,30 @@ public class Activite extends AbstractEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+
+	public LocalTime getStartingTime() {
+		return startingTime;
+	}
+
+
+
+	public void setStartingTime(LocalTime startingTime) {
+		this.startingTime = startingTime;
+	}
+
+
+
+	public LocalTime getEndingTime() {
+		return endingTime;
+	}
+
+
+
+	public void setEndingTime(LocalTime endingTime) {
+		this.endingTime = endingTime;
 	}
     
     

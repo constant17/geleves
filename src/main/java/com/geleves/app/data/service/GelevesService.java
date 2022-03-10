@@ -1,10 +1,14 @@
 package com.geleves.app.data.service;
 
+import com.geleves.app.data.entity.Acteur;
+import com.geleves.app.data.entity.Activite;
 import com.geleves.app.data.entity.Classe;
 import com.geleves.app.data.entity.Cours;
 import com.geleves.app.data.entity.Eleve;
 import com.geleves.app.data.entity.Enseignant;
 import com.geleves.app.data.entity.Parent;
+import com.geleves.app.data.repository.ActeurRepository;
+import com.geleves.app.data.repository.ActiviteRepository;
 import com.geleves.app.data.repository.ClasseRepository;
 import com.geleves.app.data.repository.CoursRepository;
 import com.geleves.app.data.repository.EleveRepository;
@@ -23,14 +27,19 @@ public class GelevesService {
     private final EnseignantRepository enseignantRepository;
     private final CoursRepository coursRepository;
     private final ClasseRepository classeRepository;
+    private final ActeurRepository acteurRepository;
+    private final ActiviteRepository activiteRepository;
 
     public GelevesService(EleveRepository eleveRepository, ParentRepository parentRep, 
-    		EnseignantRepository enseignantRep, CoursRepository coursRepository, ClasseRepository classeRepository) {
+    		EnseignantRepository enseignantRep, CoursRepository coursRepository, ClasseRepository classeRepository,
+    		ActeurRepository acteurRepository, ActiviteRepository activiteRepository) {
         this.eleveRepository = eleveRepository;
         this.parentRepository = parentRep;
         this.enseignantRepository = enseignantRep;
         this.coursRepository = coursRepository;
         this.classeRepository = classeRepository;
+        this.acteurRepository = acteurRepository;
+        this.activiteRepository = activiteRepository;
     }
 
     public List<Eleve> findAllEleves(String stringFilter) {
@@ -143,5 +152,44 @@ public class GelevesService {
 	    }
 	    classeRepository.save(classe);
 	}
+	
+	public List<Acteur> findAllActeurs() {
+	    return acteurRepository.findAll();
+	}
+	public long countActeurs() {
+	    return acteurRepository.count();
+	}
+	
+	public void deleteActeur(Acteur acteur) {
+	    acteurRepository.delete(acteur);
+	}
+	
+	public void saveActeur(Acteur acteur) {
+	    if (acteur == null) {
+	        System.err.println("Object is null. Are you sure you have connected your form to the application?");
+	        return;
+	    }
+	    acteurRepository.save(acteur);
+	}
+	
+	public List<Activite> findAllActivites() {
+	    return activiteRepository.findAll();
+	}
+	public long countActivites() {
+	    return activiteRepository.count();
+	}
+	
+	public void deleteActivite(Activite activite) {
+	    activiteRepository.delete(activite);
+	}
+	
+	public void saveActivite(Activite activite) {
+	    if (activite == null) {
+	        System.err.println("Object is null. Are you sure you have connected your form to the application?");
+	        return;
+	    }
+	    activiteRepository.save(activite);
+	}
+	
    
 }

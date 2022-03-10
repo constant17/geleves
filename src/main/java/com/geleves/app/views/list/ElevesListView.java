@@ -79,7 +79,8 @@ public class ElevesListView extends VerticalLayout {
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Rechercher un élève nom..");
+    	filterText.setWidth("24em");
+        filterText.setPlaceholder("Rechercher un élève par son nom..");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.addValueChangeListener(e -> updateList());

@@ -55,7 +55,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 	    i18n.getForm().setTitle("Connexion");
 	    i18n.getForm().setSubmit("Se Connecter");
 	    i18n.getForm().setPassword("Mot de Passe");
-	    i18n.getForm().setForgotPassword("Mot de passe oublie");
+	    i18n.getForm().setForgotPassword("Restaurer mot de passe");
 	    i18n.getErrorMessage().setTitle("Utilisateur/Mot de passe invalide");
 	    i18n.getErrorMessage()
 	        .setMessage("Verifier nom d'utilisateur et mot de passe puis reesayer.");

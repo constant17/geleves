@@ -23,7 +23,7 @@ public class Acteur extends AbstractEntity{
     private String role="";
     
     @OneToMany(mappedBy="responsable")
-    private List<Activite> activtes = new LinkedList<>();
+    private List<Activite> activites = new LinkedList<>();
     
 	@Override
     public String toString() {
