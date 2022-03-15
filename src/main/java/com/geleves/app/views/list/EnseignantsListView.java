@@ -25,7 +25,7 @@ import javax.annotation.security.PermitAll;
 @Component
 @Scope("prototype")
 @Route(value="enseignants", layout = MainLayout.class)
-@PageTitle("Enseignants | Geleves")
+@PageTitle("Enseignants | Gélèves")
 @PermitAll
 
 public class EnseignantsListView extends VerticalLayout {

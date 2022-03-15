@@ -26,7 +26,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "activites", layout = MainLayout.class)
-@PageTitle("Activités | Geleves")
+@PageTitle("Activités | Gélèves")
 @PermitAll
 
 public class ActiviteView extends VerticalLayout{

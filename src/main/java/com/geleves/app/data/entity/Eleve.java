@@ -21,9 +21,6 @@ public class Eleve extends AbstractEntity{
 	    @NotEmpty
 	    private String nom = "";
 	    
-	    @NotEmpty
-	    private String niveau = "";
-	    
 		private String addresse = "";
 		
 		private LocalDate dateDeNaissance = null;
@@ -31,12 +28,16 @@ public class Eleve extends AbstractEntity{
 	    @ManyToOne
 	    @JoinColumn(name = "parent_id")
 	    @NotNull
-	    //@JsonIgnoreProperties({"employees"})
 	    private Parent parent;
+	    
+	    @ManyToOne
+	    @JoinColumn(name = "niveau_id")
+	    @NotNull
+	    private Niveau niveau;
 
 	    @NotNull
 	    private String statut;
-
+	    
 		@Override
 	    public String toString() {
 	        return nom+" "+prenom;
@@ -67,11 +68,11 @@ public class Eleve extends AbstractEntity{
 	        this.statut = status;
 	    }
 	    
-	    public String getNiveau() {
+	    public Niveau getNiveau() {
 			return niveau;
 		}
 
-		public void setNiveau(String niveau) {
+		public void setNiveau(Niveau niveau) {
 			this.niveau = niveau;
 		}
 

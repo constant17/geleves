@@ -46,6 +46,15 @@ public class Enseignant extends AbstractEntity {
       nullable = false, updatable = false))
     private List<Classe> classes = new LinkedList<>();
     
+    @ManyToMany
+    @JoinTable(
+      name = "enseignant_niveaux", 
+      joinColumns = @JoinColumn(name = "enseignant_id", referencedColumnName = "id",
+      nullable = false, updatable = false), 
+      inverseJoinColumns = @JoinColumn(name = "niveau_id", referencedColumnName = "id",
+      nullable = false, updatable = false))
+    private List<Niveau> niveaux = new LinkedList<>();
+    
     @Formula("(select count(cr.id) from Cours cr where cr.enseignant_id = id)")
     private int nombreDeCours;
     
@@ -115,6 +124,14 @@ public class Enseignant extends AbstractEntity {
 	}
 	public void setNombreDeClasses(int nbr) {
 		nombreDeClasses = nbr;
+	}
+
+	public List<Niveau> getNiveaux() {
+		return niveaux;
+	}
+
+	public void setNiveaux(List<Niveau> niveaux) {
+		this.niveaux = niveaux;
 	}
 	
     

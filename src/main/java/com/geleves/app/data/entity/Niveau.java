@@ -1,39 +1,48 @@
 package com.geleves.app.data.entity;
 
+import com.geleves.app.data.AbstractEntity;
 
-//import java.util.LinkedList;
-//import java.util.List;
+import java.util.LinkedList;
+import java.util.List;
 
-//import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.Formula;
 
-public class Niveau {
+@Entity
+public class Niveau extends AbstractEntity {
 	
-    /*@NotBlank
-    private String nom;
+    @NotBlank
+    private String niveau;
     
     @NotBlank
-    // add formula to count
-    private int nombreDEleves;
+    private String annee_scolaire;
  
 
-   // @OneToMany(mappedBy="parent")
+    @ManyToMany(mappedBy = "niveaux", fetch = FetchType.LAZY)
     private List<Enseignant> enseignants = new LinkedList<>();
     
-    //@Formula("(select count(e.id) from Eleve e where e.parent_id = id)")
-    //private int nombreDEnfants;
+    @OneToMany(mappedBy = "niveau")
+    private List<Cours> cours = new LinkedList<>();
+    
+    @Formula("(select count(e.id) from Eleve e where e.niveau_id = id)")
+    private int nombreDEleves;
 
     @Override
     public String toString() {
-        return nom;
+        return niveau;
     }
 
-	public String getNom() {
-		return nom;
+	public String getNiveau() {
+		return niveau;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setNiveau(String nivo) {
+		this.niveau = nivo;
 	}
 
 	public int getNombreDEleves() {
@@ -48,9 +57,17 @@ public class Niveau {
         return enseignants;
     }
 
-    public void setEnfants(List<Enseignant> enseignants) {
-        this.enseignants = enseignants;
-    }
+	public String getAnnee_scolaire() {
+		return annee_scolaire;
+	}
 
-    */
+	public void setAnnee_scolaire(String annee_scolaire) {
+		this.annee_scolaire = annee_scolaire;
+	}
+
+	public void setEnseignants(List<Enseignant> enseignants) {
+		this.enseignants = enseignants;
+	}
+    
+    
 }

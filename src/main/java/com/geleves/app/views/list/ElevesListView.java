@@ -29,7 +29,7 @@ import javax.annotation.security.PermitAll;
 @Component
 @Scope("prototype")
 @Route(value="", layout = MainLayout.class)
-@PageTitle("Eleves | Geleves")
+@PageTitle("Eleves | Gélèves")
 @PermitAll
 
 public class ElevesListView extends VerticalLayout {
@@ -51,7 +51,7 @@ public class ElevesListView extends VerticalLayout {
 
         List<String> statuts = Arrays.asList(new String[] {"Normal", "Redoublant", "Recalcitrant", "Transfere", "Suspendu"});
         
-        form = new EleveForm(service.findAllParents(""), statuts);
+        form = new EleveForm(service.findAllParents(""), service.findAllNiveaux(), statuts);
         form.setWidth("25em");
         form.addListener(EleveForm.SaveEvent.class, this::saveEleve);
         form.addListener(EleveForm.DeleteEvent.class, this::deleteEleve);

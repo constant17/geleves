@@ -25,7 +25,7 @@ import javax.annotation.security.PermitAll;
 @Component
 @Scope("prototype")
 @Route(value="parents", layout = MainLayout.class)
-@PageTitle("Parents | Geleves")
+@PageTitle("Parents | Gélèves")
 @PermitAll
 
 public class ParentsListView extends VerticalLayout {

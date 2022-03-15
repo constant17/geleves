@@ -2,7 +2,6 @@ package com.geleves.app.data.generator;
 
 import java.time.LocalDateTime;
 import java.util.Random;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,10 +10,12 @@ import com.geleves.app.data.entity.Parent;
 import com.geleves.app.data.entity.Cours;
 import com.geleves.app.data.entity.Classe;
 import com.geleves.app.data.entity.Enseignant;
+import com.geleves.app.data.entity.Niveau;
 import com.geleves.app.data.repository.ClasseRepository;
 import com.geleves.app.data.repository.CoursRepository;
 import com.geleves.app.data.repository.EleveRepository;
 import com.geleves.app.data.repository.EnseignantRepository;
+import com.geleves.app.data.repository.NiveauRepository;
 import com.geleves.app.data.repository.ParentRepository;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 
@@ -30,7 +31,7 @@ public class DataGenerator {
 
     @Bean
     public CommandLineRunner loadData(EleveRepository eleveRepository, ParentRepository parentRepository, ClasseRepository classeRepository,
-    							CoursRepository coursRepository, EnseignantRepository enseignantRepository) {
+    							CoursRepository coursRepository, EnseignantRepository enseignantRepository, NiveauRepository niveauRepository) {
 
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
@@ -51,7 +52,7 @@ public class DataGenerator {
             enseignantGenerator.setData(Enseignant::setContact, DataType.PHONE_NUMBER);
             enseignantGenerator.setData(Enseignant::setEmail, DataType.EMAIL);
             enseignantGenerator.setData(Enseignant::setNombreDeClasses, DataType.NUMBER_UP_TO_10);
-            List<Enseignant> enseignants = enseignantRepository.saveAll(enseignantGenerator.create(25, seed));
+            List<Enseignant> enseignants = enseignantGenerator.create(25, seed).stream().collect(Collectors.toList());
             
             
             ExampleDataGenerator<Classe> classeGenerator = new ExampleDataGenerator<>(Classe.class,
@@ -62,16 +63,32 @@ public class DataGenerator {
             List<Classe> classes = classeGenerator.create(20, seed).stream().peek(class_ -> {
             	class_.setEnseignants(enseignants.subList(0, r.nextInt(enseignants.size())));
             }).collect(Collectors.toList());
-           
             classeRepository.saveAll(classes);
-            //classeRepository.saveAll(classeGenerator.create(20, seed));
             
+            for(Enseignant enseign: enseignants) {
+            	enseign.setClasses(classes.subList(0, r.nextInt(classes.size())));
+            }
             
+            ExampleDataGenerator<Niveau> niveauGenerator = new ExampleDataGenerator<>(Niveau.class,
+                    LocalDateTime.now());
+            String[] niveaux_ = {"6eme", "5eme", "4eme", "3eme", "2nd", "1ere", "Tle"};
+
+            List<Niveau> niveaux = niveauGenerator.create(20, seed).stream().peek(nivo -> {
+            	nivo.setAnnee_scolaire("2021-2022");
+            	nivo.setNiveau(niveaux_[r.nextInt(niveaux_.length)]);
+            	nivo.setEnseignants(enseignants.subList(0, enseignants.size()));
+            }).collect(Collectors.toList());
+            niveauRepository.saveAll(niveaux);
+            
+            for(Enseignant enseign: enseignants) {
+            	enseign.setNiveaux(niveaux.subList(0, niveaux.size()));
+            }
+            
+            enseignantRepository.saveAll(enseignants);
             
             ExampleDataGenerator<Cours> coursGenerator = new ExampleDataGenerator<>(Cours.class,
                     LocalDateTime.now());
             coursGenerator.setData(Cours::setNom, DataType.WORD);
-            coursGenerator.setData(Cours::setNiveau, DataType.STATE);
             coursGenerator.setData(Cours::setNombreDHeuresParSemaine, DataType.NUMBER_UP_TO_10);
             coursGenerator.setData(Cours::setCoefficient, DataType.NUMBER_UP_TO_10);
             coursGenerator.setData(Cours::setCode, DataType.DOMAIN);
@@ -79,6 +96,7 @@ public class DataGenerator {
             
             List<Cours> cours = coursGenerator.create(30, seed).stream().peek(cour -> {
                 cour.setEnseignant(enseignants.get(r.nextInt(enseignants.size())));
+                cour.setNiveau(niveaux.get(r.nextInt(niveaux.size())));;
                 cour.setClasse(classes.get(r.nextInt(classes.size())));
              }).collect(Collectors.toList());
             
@@ -103,11 +121,11 @@ public class DataGenerator {
             eleveGenerator.setData(Eleve::setNom, DataType.LAST_NAME);
             eleveGenerator.setData(Eleve::setAddresse, DataType.ADDRESS);
             eleveGenerator.setData(Eleve::setDateDeNaissance, DataType.DATE_OF_BIRTH);
-            eleveGenerator.setData(Eleve::setNiveau, DataType.BOOK_TITLE_PREFIX);
             
             List<Eleve> eleves = eleveGenerator.create(50, seed).stream().peek(eleve -> {
                eleve.setStatut(statuses[r.nextInt(statuses.length)]);
                eleve.setParent(parents.get(r.nextInt(parents.size())));
+               eleve.setNiveau(niveaux.get(r.nextInt(niveaux.size())));
             }).collect(Collectors.toList());
 
             eleveRepository.saveAll(eleves);

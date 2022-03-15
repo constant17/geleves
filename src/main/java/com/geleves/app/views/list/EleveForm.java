@@ -2,6 +2,7 @@ package com.geleves.app.views.list;
 
 import com.geleves.app.data.entity.Company;
 import com.geleves.app.data.entity.Eleve;
+import com.geleves.app.data.entity.Niveau;
 import com.geleves.app.data.entity.Parent;
 import com.geleves.app.data.entity.Status;
 import com.vaadin.flow.component.ComponentEvent;
@@ -29,7 +30,7 @@ public class EleveForm extends FormLayout {
   TextField nom = new TextField("Nom");
   TextField addresse = new TextField("Addresse");
   DatePicker dateDeNaissance = new DatePicker("Date de naissance");
-  TextField niveau = new TextField("Niveau");
+  ComboBox<Niveau> niveau = new ComboBox<>("Niveau");
   ComboBox<String> statut = new ComboBox<>("Statut");
   
   ComboBox<Parent> parent = new ComboBox<>("Parent");
@@ -40,7 +41,7 @@ public class EleveForm extends FormLayout {
   Button delete = new Button("Supprimer");
   Button close = new Button("Annuler");
 
-  public EleveForm(List<Parent> parents, List<String> statuts) {
+  public EleveForm(List<Parent> parents, List<Niveau> niveaux, List<String> statuts) {
 	
     addClassName("eleve-form");
     binder.bindInstanceFields(this);
@@ -53,6 +54,9 @@ public class EleveForm extends FormLayout {
 	
     parent.setItems(parents);
     parent.setItemLabelGenerator(Parent::toString);
+    
+    niveau.setItems(niveaux);
+    niveau.setItemLabelGenerator(Niveau::toString);
     
     add(nom,
         prenom,

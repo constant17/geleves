@@ -6,6 +6,7 @@ import com.geleves.app.data.entity.Classe;
 import com.geleves.app.data.entity.Cours;
 import com.geleves.app.data.entity.Eleve;
 import com.geleves.app.data.entity.Enseignant;
+import com.geleves.app.data.entity.Niveau;
 import com.geleves.app.data.entity.Parent;
 import com.geleves.app.data.repository.ActeurRepository;
 import com.geleves.app.data.repository.ActiviteRepository;
@@ -13,6 +14,7 @@ import com.geleves.app.data.repository.ClasseRepository;
 import com.geleves.app.data.repository.CoursRepository;
 import com.geleves.app.data.repository.EleveRepository;
 import com.geleves.app.data.repository.EnseignantRepository;
+import com.geleves.app.data.repository.NiveauRepository;
 import com.geleves.app.data.repository.ParentRepository;
 
 import org.springframework.stereotype.Service;
@@ -29,10 +31,11 @@ public class GelevesService {
     private final ClasseRepository classeRepository;
     private final ActeurRepository acteurRepository;
     private final ActiviteRepository activiteRepository;
+    private final NiveauRepository niveauRepository;
 
     public GelevesService(EleveRepository eleveRepository, ParentRepository parentRep, 
     		EnseignantRepository enseignantRep, CoursRepository coursRepository, ClasseRepository classeRepository,
-    		ActeurRepository acteurRepository, ActiviteRepository activiteRepository) {
+    		ActeurRepository acteurRepository, ActiviteRepository activiteRepository, NiveauRepository niveauRepository) {
         this.eleveRepository = eleveRepository;
         this.parentRepository = parentRep;
         this.enseignantRepository = enseignantRep;
@@ -40,6 +43,7 @@ public class GelevesService {
         this.classeRepository = classeRepository;
         this.acteurRepository = acteurRepository;
         this.activiteRepository = activiteRepository;
+        this.niveauRepository = niveauRepository;
     }
 
     public List<Eleve> findAllEleves(String stringFilter) {
@@ -189,6 +193,10 @@ public class GelevesService {
 	        return;
 	    }
 	    activiteRepository.save(activite);
+	}
+	
+	public List<Niveau> findAllNiveaux(){
+		return niveauRepository.findAll();
 	}
 	
    

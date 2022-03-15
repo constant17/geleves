@@ -4,7 +4,6 @@ package com.geleves.app.data.entity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -17,8 +16,6 @@ public class Cours extends AbstractEntity {
     @NotBlank
     private String nom;
     
-    @NotBlank
-    private String niveau;
    
     private int nombreDHeuresParSemaine;
     
@@ -38,6 +35,11 @@ public class Cours extends AbstractEntity {
     @NotNull
     private Classe classe;
     
+    @ManyToOne
+    @JoinColumn(name = "niveau_id")
+    @NotNull
+    private Niveau niveau;
+    
     
 
     @Override
@@ -53,11 +55,11 @@ public class Cours extends AbstractEntity {
 		this.nom = nom;
 	}
 
-	public String getNiveau() {
+	public Niveau getNiveau() {
 		return niveau;
 	}
 
-	public void setNiveau(String niveau) {
+	public void setNiveau(Niveau niveau) {
 		this.niveau = niveau;
 	}
 
@@ -100,6 +102,7 @@ public class Cours extends AbstractEntity {
 	public void setClasse(Classe classe) {
 		this.classe = classe;
 	}
+
 	
     
 }
