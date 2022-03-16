@@ -1,5 +1,6 @@
 package com.geleves.app.views.list;
 
+import com.geleves.app.data.entity.Classe;
 import com.geleves.app.data.entity.Company;
 import com.geleves.app.data.entity.Eleve;
 import com.geleves.app.data.entity.Niveau;
@@ -31,6 +32,7 @@ public class EleveForm extends FormLayout {
   TextField addresse = new TextField("Addresse");
   DatePicker dateDeNaissance = new DatePicker("Date de naissance");
   ComboBox<Niveau> niveau = new ComboBox<>("Niveau");
+  ComboBox<Classe> classe = new ComboBox<>("Classe");
   ComboBox<String> statut = new ComboBox<>("Statut");
   
   ComboBox<Parent> parent = new ComboBox<>("Parent");
@@ -41,7 +43,7 @@ public class EleveForm extends FormLayout {
   Button delete = new Button("Supprimer");
   Button close = new Button("Annuler");
 
-  public EleveForm(List<Parent> parents, List<Niveau> niveaux, List<String> statuts) {
+  public EleveForm(List<Parent> parents, List<Niveau> niveaux, List<String> statuts, List<Classe> classes_) {
 	
     addClassName("eleve-form");
     binder.bindInstanceFields(this);
@@ -50,6 +52,7 @@ public class EleveForm extends FormLayout {
 	singleFormatI18n.setDateFormat("dd-MM-yyyy");
 	dateDeNaissance.setI18n(singleFormatI18n);
 	
+	classe.setItems(classes_);
 	statut.setItems(statuts);
 	
     parent.setItems(parents);
@@ -63,6 +66,7 @@ public class EleveForm extends FormLayout {
         dateDeNaissance,
         addresse,
         niveau,
+        classe,
         statut,
         parent,
         createButtonsLayout()); 

@@ -34,6 +34,11 @@ public class Eleve extends AbstractEntity{
 	    @JoinColumn(name = "niveau_id")
 	    @NotNull
 	    private Niveau niveau;
+	    
+	    @ManyToOne
+	    @JoinColumn(name = "classe_id")
+	    @NotNull
+	    private Classe classe;
 
 	    @NotNull
 	    private String statut;
@@ -99,6 +104,16 @@ public class Eleve extends AbstractEntity{
 		public void setDateDeNaissance(LocalDate date_de_naissance) {
 			this.dateDeNaissance = date_de_naissance;
 		}
+
+		public Classe getClasse() {
+			return classe;
+		}
+
+		public void setClasse(Classe classe) {
+			this.classe = classe;
+		}
+		
+		
 		
 
 }

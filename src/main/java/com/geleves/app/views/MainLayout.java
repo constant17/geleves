@@ -91,6 +91,24 @@ public class MainLayout extends AppLayout {
         Tab activites = new Tab();
         activites.add(activitesLink);
         
+        RouterLink bulletinLink = new RouterLink(null, NotesBulletinView.class);
+        bulletinLink.setHighlightCondition(HighlightConditions.sameLocation());
+        bulletinLink.setClassName("main-layout__left-nav-item");
+        bulletinLink.add(new Icon(VaadinIcon.ARCHIVE));
+        bulletinLink.add(new Span("   "));
+        bulletinLink.add(new Span("Notes et Bulletin"));
+        Tab bulletin = new Tab();
+        bulletin.add(bulletinLink);
+        
+        RouterLink paiementLink = new RouterLink(null, PaiementView.class);
+        paiementLink.setHighlightCondition(HighlightConditions.sameLocation());
+        paiementLink.setClassName("main-layout__left-nav-item");
+        paiementLink.add(new Icon(VaadinIcon.MONEY_DEPOSIT));
+        paiementLink.add(new Span("   "));
+        paiementLink.add(new Span("Paiements"));
+        Tab paiements = new Tab();
+        paiements.add(paiementLink);
+        
         RouterLink dashLink = new RouterLink(null, DashboardView.class);
         dashLink.setHighlightCondition(HighlightConditions.sameLocation());
         dashLink.setClassName("main-layout__left-nav-item");
@@ -105,6 +123,8 @@ public class MainLayout extends AppLayout {
                 parents,
                 enseignants,
                 activites,
+                bulletin,
+                paiements,
                dashboard
             ), createFooter());
         section.addClassNames("flex", "flex-col", "items-stretch", "max-h-full", "min-h-full");

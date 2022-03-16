@@ -16,10 +16,17 @@ public class Note extends AbstractEntity{
 	@NotNull
 	private String type_dexamen;
 	
+	private String commentaire;
+	
 	 @ManyToOne
 	 @JoinColumn(name = "eleve_id")
 	 @NotNull
 	 private Eleve eleve;
+	 
+	 @ManyToOne
+	 @JoinColumn(name = "cours_id")
+	 @NotNull
+	 private Cours matiere;
 	
 	@Override
 	public String toString() {
@@ -48,6 +55,22 @@ public class Note extends AbstractEntity{
 
 	public void setEleve(Eleve eleve) {
 		this.eleve = eleve;
+	}
+
+	public Cours getMatiere() {
+		return matiere;
+	}
+
+	public void setMatiere(Cours matiere) {
+		this.matiere = matiere;
+	}
+
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
 	}
 	
 	

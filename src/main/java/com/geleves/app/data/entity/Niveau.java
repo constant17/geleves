@@ -2,8 +2,10 @@ package com.geleves.app.data.entity;
 
 import com.geleves.app.data.AbstractEntity;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,7 +26,7 @@ public class Niveau extends AbstractEntity {
  
 
     @ManyToMany(mappedBy = "niveaux", fetch = FetchType.LAZY)
-    private List<Enseignant> enseignants = new LinkedList<>();
+    private Set<Enseignant> enseignants = new HashSet<Enseignant>();
     
     @OneToMany(mappedBy = "niveau")
     private List<Cours> cours = new LinkedList<>();
@@ -53,7 +55,7 @@ public class Niveau extends AbstractEntity {
 		this.nombreDEleves = nombreDEleves;
 	}
     
-	public List<Enseignant> getEnseignants() {
+	public Set<Enseignant> getEnseignants() {
         return enseignants;
     }
 
@@ -65,7 +67,7 @@ public class Niveau extends AbstractEntity {
 		this.annee_scolaire = annee_scolaire;
 	}
 
-	public void setEnseignants(List<Enseignant> enseignants) {
+	public void setEnseignants(Set<Enseignant> enseignants) {
 		this.enseignants = enseignants;
 	}
     

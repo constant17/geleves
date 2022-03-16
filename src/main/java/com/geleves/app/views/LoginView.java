@@ -52,7 +52,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 		i18n.getHeader().setTitle("Geleves");
 	    i18n.getHeader().setDescription("Gestion des eleves");
 	    i18n.getForm().setUsername("Utilisateur"); // this is the one you asked for.
-	    i18n.getForm().setTitle("Connexion");
+	    i18n.getForm().setTitle("");
 	    i18n.getForm().setSubmit("Se Connecter");
 	    i18n.getForm().setPassword("Mot de Passe");
 	    i18n.getForm().setForgotPassword("Restaurer mot de passe");

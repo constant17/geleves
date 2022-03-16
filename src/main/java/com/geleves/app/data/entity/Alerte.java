@@ -1,8 +1,11 @@
 package com.geleves.app.data.entity;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.geleves.app.data.AbstractEntity;
@@ -22,9 +25,19 @@ public class Alerte extends AbstractEntity{
 	
 	
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "concerne_id")
-	private Parent concerne;
+	@OneToMany
+	@JoinColumn(name = "parent_id")
+	private Set<Parent> parent_concernes;
+	
+	@NotNull
+	@OneToMany
+	@JoinColumn(name = "acteur_id")
+	private Set<Acteur> acteurs_concernes;
+	
+	@NotNull
+	@OneToMany
+	@JoinColumn(name = "enseignant_id")
+	private Set<Enseignant> enseignants_concernes;
 
 	public String getTitre() {
 		return titre;
@@ -50,12 +63,12 @@ public class Alerte extends AbstractEntity{
 		this.type_dalerte = type_dalerte;
 	}
 
-	public Parent getConcerne() {
-		return concerne;
+	public Set<Parent> getParentsConcernes() {
+		return parent_concernes;
 	}
 
-	public void setConcerne(Parent concerne) {
-		this.concerne = concerne;
+	public void setConcerne(Set<Parent> concernes) {
+		this.parent_concernes = concernes;
 	}
 	
 	

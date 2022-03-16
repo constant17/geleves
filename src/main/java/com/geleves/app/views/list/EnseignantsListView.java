@@ -41,7 +41,7 @@ public class EnseignantsListView extends VerticalLayout {
         setSizeFull();
         configureGrid();
 
-        form = new EnseignantForm();
+        form = new EnseignantForm(service.findAllCours(), service.findAllNiveaux(), service.findAllClasses());
         form.setWidth("25em");
         form.addListener(EnseignantForm.SaveEvent.class, this::saveEnseignant);
         form.addListener(EnseignantForm.DeleteEvent.class, this::deleteEnseignant);

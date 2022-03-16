@@ -4,6 +4,7 @@ package com.geleves.app.data.entity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -79,6 +80,7 @@ public class Cours extends AbstractEntity {
 		this.nombreDHeuresParSemaine = nombreHeures;
 	}
     
+	@Transactional
 	public Enseignant getEnseignant() {
 		return enseignant;
 	}

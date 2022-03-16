@@ -1,6 +1,7 @@
 package com.geleves.app.views.list;
 
 import com.geleves.app.data.entity.Parent;
+import com.geleves.app.data.entity.Cours;
 import com.geleves.app.data.entity.Eleve;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -19,6 +20,8 @@ import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
+import org.vaadin.gatanaso.MultiselectComboBox;
+
 public class ParentForm extends FormLayout {
 	private Parent parent;
 
@@ -27,7 +30,7 @@ public class ParentForm extends FormLayout {
   TextField address = new TextField("Address");
   EmailField email = new EmailField("Email");
   TextField contact = new TextField("Contact");
-  //ComboBox<Eleve> enfants = new ComboBox<>("Eleve");
+  MultiselectComboBox<Eleve> enfants = new MultiselectComboBox("Enfants inscrits:");
   Binder<Parent> binder = new BeanValidationBinder<>(Parent.class);
 
   Button save = new Button("Sauvegarder");
@@ -38,13 +41,15 @@ public class ParentForm extends FormLayout {
     addClassName("contact-form");
     binder.bindInstanceFields(this);
 
-    //enfants.setItems(eleves);
+    enfants.setItems(eleves);
+    enfants.setSizeFull();
     //enfants.setItemLabelGenerator(Eleve::toString);
     add(nom,
         prenom,
         contact,
         address,
         email,
+        enfants,
         createButtonsLayout()); 
   }
 

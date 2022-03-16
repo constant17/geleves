@@ -2,6 +2,9 @@ package com.geleves.app.data.generator;
 
 import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.Set;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,8 +54,7 @@ public class DataGenerator {
             enseignantGenerator.setData(Enseignant::setPrenom, DataType.LAST_NAME);
             enseignantGenerator.setData(Enseignant::setContact, DataType.PHONE_NUMBER);
             enseignantGenerator.setData(Enseignant::setEmail, DataType.EMAIL);
-            enseignantGenerator.setData(Enseignant::setNombreDeClasses, DataType.NUMBER_UP_TO_10);
-            List<Enseignant> enseignants = enseignantGenerator.create(25, seed).stream().collect(Collectors.toList());
+            HashSet<Enseignant> enseignants = (HashSet<Enseignant>) enseignantGenerator.create(25, seed).stream().collect(Collectors.toSet());
             
             
             ExampleDataGenerator<Classe> classeGenerator = new ExampleDataGenerator<>(Classe.class,
@@ -60,28 +62,28 @@ public class DataGenerator {
             classeGenerator.setData(Classe::setNom, DataType.WORD);
             classeGenerator.setData(Classe::setNiveau, DataType.STATE);
             
-            List<Classe> classes = classeGenerator.create(20, seed).stream().peek(class_ -> {
-            	class_.setEnseignants(enseignants.subList(0, r.nextInt(enseignants.size())));
-            }).collect(Collectors.toList());
+            HashSet<Classe> classes = (HashSet<Classe>) classeGenerator.create(20, seed).stream().peek(class_ -> {
+            	class_.setEnseignants(enseignants.stream().limit(r.nextInt(enseignants.size())).collect(Collectors.toSet()));
+            }).collect(Collectors.toSet());
             classeRepository.saveAll(classes);
             
             for(Enseignant enseign: enseignants) {
-            	enseign.setClasses(classes.subList(0, r.nextInt(classes.size())));
+            	enseign.setClasses(classes.stream().limit(r.nextInt(classes.size())).collect(Collectors.toSet()));
             }
             
             ExampleDataGenerator<Niveau> niveauGenerator = new ExampleDataGenerator<>(Niveau.class,
                     LocalDateTime.now());
             String[] niveaux_ = {"6eme", "5eme", "4eme", "3eme", "2nd", "1ere", "Tle"};
 
-            List<Niveau> niveaux = niveauGenerator.create(20, seed).stream().peek(nivo -> {
+            HashSet<Niveau> niveaux = (HashSet<Niveau>)niveauGenerator.create(20, seed).stream().peek(nivo -> {
             	nivo.setAnnee_scolaire("2021-2022");
             	nivo.setNiveau(niveaux_[r.nextInt(niveaux_.length)]);
-            	nivo.setEnseignants(enseignants.subList(0, enseignants.size()));
-            }).collect(Collectors.toList());
+            	nivo.setEnseignants(enseignants.stream().limit(r.nextInt(enseignants.size())).collect(Collectors.toSet()));
+            }).collect(Collectors.toSet());
             niveauRepository.saveAll(niveaux);
             
             for(Enseignant enseign: enseignants) {
-            	enseign.setNiveaux(niveaux.subList(0, niveaux.size()));
+            	enseign.setNiveaux(niveaux.stream().limit(r.nextInt(niveaux.size())).collect(Collectors.toSet()));
             }
             
             enseignantRepository.saveAll(enseignants);
@@ -95,9 +97,9 @@ public class DataGenerator {
             
             
             List<Cours> cours = coursGenerator.create(30, seed).stream().peek(cour -> {
-                cour.setEnseignant(enseignants.get(r.nextInt(enseignants.size())));
-                cour.setNiveau(niveaux.get(r.nextInt(niveaux.size())));;
-                cour.setClasse(classes.get(r.nextInt(classes.size())));
+                cour.setEnseignant((Enseignant) getRandomEltFromSet(enseignants));
+                cour.setNiveau((Niveau) getRandomEltFromSet(niveaux));;
+                cour.setClasse((Classe) getRandomEltFromSet(classes));
              }).collect(Collectors.toList());
             
             coursRepository.saveAll(cours);
@@ -125,13 +127,26 @@ public class DataGenerator {
             List<Eleve> eleves = eleveGenerator.create(50, seed).stream().peek(eleve -> {
                eleve.setStatut(statuses[r.nextInt(statuses.length)]);
                eleve.setParent(parents.get(r.nextInt(parents.size())));
-               eleve.setNiveau(niveaux.get(r.nextInt(niveaux.size())));
+               eleve.setNiveau((Niveau) getRandomEltFromSet(niveaux));
+               eleve.setClasse((Classe) getRandomEltFromSet(classes));
             }).collect(Collectors.toList());
 
             eleveRepository.saveAll(eleves);
 
             logger.info("Generated demo data");
         };
+    }
+    
+    public <T> Object getRandomEltFromSet(Set<T> set) {
+    	int item = new Random().nextInt(set.size()); 
+    	int i = 0;
+    	for(Object obj : set)
+    	{
+    	    if (i == item)
+    	        return obj;
+    	    i++;
+    	}
+		return null;
     }
 
 }

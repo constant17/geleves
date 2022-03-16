@@ -1,11 +1,15 @@
 package com.geleves.app.data.entity;
 
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -34,8 +38,8 @@ public class Parent extends AbstractEntity {
     @NotEmpty
     private String email;
 
-    @OneToMany(mappedBy="parent")
-    private List<Eleve> enfants = new LinkedList<>();
+    @OneToMany(mappedBy="parent", fetch = FetchType.EAGER)
+    private Set<Eleve> enfants = new HashSet<Eleve>();
     
     @Formula("(select count(e.id) from Eleve e where e.parent_id = id)")
     private int nombreDEnfants;
@@ -85,11 +89,12 @@ public class Parent extends AbstractEntity {
 		this.email = email;
 	}
     
-	public List<Eleve> getEnfants() {
+	@Transactional
+	public Set<Eleve> getEnfants() {
         return enfants;
     }
 
-    public void setEnfants(List<Eleve> enfants) {
+    public void setEnfants(Set<Eleve> enfants) {
         this.enfants = enfants;
     }
 

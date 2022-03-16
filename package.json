@@ -130,7 +130,8 @@
     "lit": "2.0.0",
     "lumo-css-framework": "^4.0.10",
     "moment": "2.29.1",
-    "moment-timezone": "0.5.32"
+    "moment-timezone": "0.5.32",
+    "multiselect-combo-box": "3.0.0-alpha.2"
   },
   "devDependencies": {
     "@vaadin/application-theme-plugin": "./target/plugins/application-theme-plugin",
@@ -287,7 +288,8 @@
       "lit": "2.0.0",
       "lumo-css-framework": "^4.0.10",
       "moment": "2.29.1",
-      "moment-timezone": "0.5.32"
+      "moment-timezone": "0.5.32",
+      "multiselect-combo-box": "3.0.0-alpha.2"
     },
     "devDependencies": {
       "chokidar": "^3.5.0",
@@ -311,6 +313,6 @@
       "workbox-precaching": "6.4.2",
       "workbox-webpack-plugin": "6.4.2"
     },
-    "hash": "b2bd17bad42367af2cfa12b8766894dd34a8e57c932ec605f6fc762ea7cb398e"
+    "hash": "589065e816680b188298da7ffbc44c4ae251b964ebcfbc0a77c5eb838f20e9bf"
   }
 }

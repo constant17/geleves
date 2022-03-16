@@ -2,14 +2,16 @@ package com.geleves.app.data.entity;
 
 
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -33,32 +35,32 @@ public class Enseignant extends AbstractEntity {
     @Email
     private String email;
 
-    //  Replacer par les classes et matieres
-    @OneToMany(mappedBy="enseignant")
-    private List<Cours> cours = new LinkedList<>();
+
+    @OneToMany(mappedBy="enseignant", fetch = FetchType.EAGER)
+    private Set<Cours> cours = new HashSet<Cours>();
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
       name = "enseignant_classes", 
       joinColumns = @JoinColumn(name = "enseignant_id", referencedColumnName = "id",
       nullable = false, updatable = false), 
       inverseJoinColumns = @JoinColumn(name = "classe_id", referencedColumnName = "id",
       nullable = false, updatable = false))
-    private List<Classe> classes = new LinkedList<>();
+    private Set<Classe> classes = new HashSet<Classe>();
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
       name = "enseignant_niveaux", 
       joinColumns = @JoinColumn(name = "enseignant_id", referencedColumnName = "id",
       nullable = false, updatable = false), 
       inverseJoinColumns = @JoinColumn(name = "niveau_id", referencedColumnName = "id",
       nullable = false, updatable = false))
-    private List<Niveau> niveaux = new LinkedList<>();
+    private Set<Niveau> niveaux = new HashSet<Niveau>();
     
     @Formula("(select count(cr.id) from Cours cr where cr.enseignant_id = id)")
     private int nombreDeCours;
     
-   //@Formula("(select count(classe_id) from classe_enseignants where enseignant_id = id)")
+   @Formula("(select count(ec.classe_id) from enseignant_classes ec where ec.enseignant_id = id)")
     private int nombreDeClasses;
 
     @Override
@@ -98,20 +100,21 @@ public class Enseignant extends AbstractEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Cours> getCours() {
+	@Transactional
+	public Set<Cours> getCours() {
 		return cours;
 	}
 
-	public void setCours(List<Cours> cours) {
+	public void setCours(Set<Cours> cours) {
 		this.cours = cours;
 	}
 
-	public List<Classe> getClasses() {
+	@Transactional
+	public Set<Classe> getClasses() {
 		return classes;
 	}
 
-	public void setClasses(List<Classe> classes) {
+	public void setClasses(Set<Classe> classes) {
 		this.classes = classes;
 	}
 
@@ -122,15 +125,12 @@ public class Enseignant extends AbstractEntity {
 	public int getNombreDeClasses() {
 		return nombreDeClasses;
 	}
-	public void setNombreDeClasses(int nbr) {
-		nombreDeClasses = nbr;
-	}
-
-	public List<Niveau> getNiveaux() {
+	@Transactional
+	public Set<Niveau> getNiveaux() {
 		return niveaux;
 	}
 
-	public void setNiveaux(List<Niveau> niveaux) {
+	public void setNiveaux(Set<Niveau> niveaux) {
 		this.niveaux = niveaux;
 	}
 	

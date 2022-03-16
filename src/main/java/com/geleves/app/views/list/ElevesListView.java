@@ -51,7 +51,7 @@ public class ElevesListView extends VerticalLayout {
 
         List<String> statuts = Arrays.asList(new String[] {"Normal", "Redoublant", "Recalcitrant", "Transfere", "Suspendu"});
         
-        form = new EleveForm(service.findAllParents(""), service.findAllNiveaux(), statuts);
+        form = new EleveForm(service.findAllParents(""), service.findAllNiveaux(), statuts, service.findAllClasses());
         form.setWidth("25em");
         form.addListener(EleveForm.SaveEvent.class, this::saveEleve);
         form.addListener(EleveForm.DeleteEvent.class, this::deleteEleve);
@@ -74,7 +74,7 @@ public class ElevesListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("nom", "prenom", "addresse", "dateDeNaissance", "niveau", "statut");
+        grid.setColumns("nom", "prenom", "addresse", "dateDeNaissance", "niveau", "classe", "statut");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
