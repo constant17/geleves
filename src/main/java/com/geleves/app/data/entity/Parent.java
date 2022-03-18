@@ -95,10 +95,10 @@ public class Parent extends AbstractEntity {
     }
 
     public void setEnfants(Set<Eleve> enfants) {
-        this.enfants = enfants;
-    }
+		this.enfants = enfants;
+	}
 
-    public int getNombreDEnfants(){
+	public int getNombreDEnfants(){
         return nombreDEnfants;
     }
     

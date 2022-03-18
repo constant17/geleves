@@ -74,7 +74,7 @@ public class ElevesListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("contact-grid");
         grid.setSizeFull();
-        grid.setColumns("nom", "prenom", "addresse", "dateDeNaissance", "niveau", "classe", "statut");
+        grid.setColumns("nom", "prenom", "addresse", "dateDeNaissance", "dateDInscription", "classe", "statut");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 

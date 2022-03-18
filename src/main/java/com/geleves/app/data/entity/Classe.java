@@ -8,13 +8,17 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.Formula;
 
 import com.geleves.app.data.AbstractEntity;
+import com.sun.istack.NotNull;
 
 
 @Entity
@@ -23,8 +27,18 @@ public class Classe extends AbstractEntity {
     @NotBlank
     private String nom;
     
-    @NotBlank
-    private String niveau;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "niveau_id")
+    private Niveau niveau;
+    
+    @NotNull
+    @Formula("(select count(e.id) from Eleve e where e.classe_id = id)")
+    private int effectif;
+    
+    @OneToOne
+    @JoinColumn(name = "chef_de_classe_id")
+    private Eleve chefDeClasse;
     
     
     @ManyToMany(mappedBy = "classes", fetch = FetchType.LAZY)
@@ -46,11 +60,11 @@ public class Classe extends AbstractEntity {
 		this.nom = nom;
 	}
 
-	public String getNiveau() {
+	public Niveau getNiveau() {
 		return niveau;
 	}
 
-	public void setNiveau(String niveau) {
+	public void setNiveau(Niveau niveau) {
 		this.niveau = niveau;
 	}
 
@@ -71,6 +85,14 @@ public class Classe extends AbstractEntity {
 		this.cours = cours;
 	}
 
-   
+	public int getEffectif() {return this.effectif;}
+
+	public Eleve getChefDeClasse() {
+		return chefDeClasse;
+	}
+
+	public void setChefDeClasse(Eleve chefDeClasse) {
+		this.chefDeClasse = chefDeClasse;
+	}
     
 }

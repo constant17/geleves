@@ -24,6 +24,7 @@ public class DashboardView extends VerticalLayout {
 	private final CrmService service;
 
     public DashboardView(CrmService service) {
+    	MainLayout.tabs.setSelectedIndex(MainLayout.DASH_TAB);
         this.service = service;
         addClassName("dashboard-view");
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);

@@ -16,6 +16,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.router.HighlightAction;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
@@ -24,10 +26,21 @@ public class MainLayout extends AppLayout {
     /**
 	 * 
 	 */
+	public static final int ELEVES_TAB = 0;
+	public static final int PARENTS_TAB = 1;
+	public static final int ENS_TAB = 2;
+	public static final int ACTIVITES_TAB = 3;
+	public static final int NOTES_TAB = 4;
+	public static final int BULLETIN_TAB = 5;
+	public static final int PAIEMENT_TAB = 6;
+	public static final int DASH_TAB = 7;
+	
 	private static final long serialVersionUID = 1L;
 	private final SecurityService securityService;
 	private String contentPage;
 	private H1 viewTitle; 
+	
+	public static Tabs tabs;
 
     public MainLayout(SecurityService securityService) {
         this.securityService = securityService;
@@ -58,80 +71,105 @@ public class MainLayout extends AppLayout {
         RouterLink elevesListLink = new RouterLink(null, ElevesListView.class);
         elevesListLink.setHighlightCondition(HighlightConditions.sameLocation());
         elevesListLink.setClassName("main-layout__left-nav-item");
-        elevesListLink.add(new Icon(VaadinIcon.USERS));
-		elevesListLink.add(new Span("   "));
-        elevesListLink.add(new Span("Élèves"));
-        Tab eleves = new Tab();
-        eleves.add(elevesListLink);
+        elevesListLink.add(new Span("   Élèves"));
+        Tab eleves = new Tab(
+        		VaadinIcon.USERS.create(),
+        		elevesListLink
+        );
         
         RouterLink parentsListLink = new RouterLink(null, ParentsListView.class);
         parentsListLink.setHighlightCondition(HighlightConditions.sameLocation());
         parentsListLink.setClassName("main-layout__left-nav-item");
-        parentsListLink.add( new Icon(VaadinIcon.USER));
-        parentsListLink.add(new Span("   "));
-        parentsListLink.add(new Span("Parents"));
-        Tab parents = new Tab();
-        parents.add(parentsListLink);
+        parentsListLink.add(new Span("   Parents"));
+        Tab parents = new Tab(
+        		VaadinIcon.USER.create(),
+        		parentsListLink
+        );
         
         RouterLink enseignantsListLink = new RouterLink(null, EnseignantsListView.class);
         enseignantsListLink.setHighlightCondition(HighlightConditions.sameLocation());
         enseignantsListLink.setClassName("main-layout__left-nav-item");
-        enseignantsListLink.add(new Icon(VaadinIcon.SPECIALIST));
-        enseignantsListLink.add(new Span("   "));
-        enseignantsListLink.add(new Span("Enseignants"));
-        Tab enseignants = new Tab();
-        enseignants.add(enseignantsListLink);
+        enseignantsListLink.add(new Span("   Enseignants"));
+        Tab enseignants = new Tab(
+        		VaadinIcon.SPECIALIST.create(),
+        		enseignantsListLink
+        );
         
         RouterLink activitesLink = new RouterLink(null, ActiviteView.class);
         activitesLink.setHighlightCondition(HighlightConditions.sameLocation());
         activitesLink.setClassName("main-layout__left-nav-item");
-        activitesLink.add(new Icon(VaadinIcon.CALENDAR_CLOCK));
-        activitesLink.add(new Span("   "));
-        activitesLink.add(new Span("Activités"));
-        Tab activites = new Tab();
-        activites.add(activitesLink);
+        activitesLink.add(new Span("   Activités"));
+        Tab activites = new Tab(
+        		VaadinIcon.CALENDAR_CLOCK.create(),
+        		activitesLink
+        );
         
-        RouterLink bulletinLink = new RouterLink(null, NotesBulletinView.class);
+        RouterLink notesLink = new RouterLink(null, NotesView.class);
+        notesLink.setHighlightCondition(HighlightConditions.sameLocation());
+        notesLink.setClassName("main-layout__left-nav-item");
+        notesLink.add(new Span("   Notes"));
+        Tab notes = new Tab(
+        		VaadinIcon.CLIPBOARD_CHECK.create(),
+        		notesLink
+        	);
+        
+        RouterLink bulletinLink = new RouterLink(null, ElevesBulletinView.class);
         bulletinLink.setHighlightCondition(HighlightConditions.sameLocation());
         bulletinLink.setClassName("main-layout__left-nav-item");
-        bulletinLink.add(new Icon(VaadinIcon.ARCHIVE));
-        bulletinLink.add(new Span("   "));
-        bulletinLink.add(new Span("Notes et Bulletin"));
-        Tab bulletin = new Tab();
-        bulletin.add(bulletinLink);
+        bulletinLink.add(new Span("   Bulletins"));
+        Tab bulletin =  new Tab(
+        		VaadinIcon.ARCHIVE.create(),
+        		bulletinLink
+        	);
         
         RouterLink paiementLink = new RouterLink(null, PaiementView.class);
         paiementLink.setHighlightCondition(HighlightConditions.sameLocation());
         paiementLink.setClassName("main-layout__left-nav-item");
-        paiementLink.add(new Icon(VaadinIcon.MONEY_DEPOSIT));
-        paiementLink.add(new Span("   "));
-        paiementLink.add(new Span("Paiements"));
-        Tab paiements = new Tab();
-        paiements.add(paiementLink);
+        paiementLink.add(new Span("   Paiements"));
+        Tab paiements =  new Tab(
+        		VaadinIcon.MONEY_DEPOSIT.create(),
+        		paiementLink
+        	);
         
         RouterLink dashLink = new RouterLink(null, DashboardView.class);
         dashLink.setHighlightCondition(HighlightConditions.sameLocation());
         dashLink.setClassName("main-layout__left-nav-item");
-        dashLink.add(new Icon(VaadinIcon.DASHBOARD));
-        dashLink.add(new Span("   "));
-        dashLink.add(new Span("Tableau de board"));
-        Tab dashboard = new Tab();
-        dashboard.add(dashLink);
+        //dashLink.add(new Icon(VaadinIcon.DASHBOARD));
+        //dashLink.add(new Span("   "));
+        dashLink.add(new Span("   Tableau de board"));
         
-        com.vaadin.flow.component.html.Section section = new com.vaadin.flow.component.html.Section(new VerticalLayout(
+        Tab dashboard = new Tab(
+        		VaadinIcon.DASHBOARD.create(),
+        		dashLink
+        	);
+        
+        /*com.vaadin.flow.component.html.Section section = new com.vaadin.flow.component.html.Section(new VerticalLayout(
                 eleves,
                 parents,
                 enseignants,
                 activites,
+                notes,
                 bulletin,
                 paiements,
                dashboard
             ), createFooter());
-        section.addClassNames("flex", "flex-col", "items-stretch", "max-h-full", "min-h-full");
+        section.addClassNames("flex", "flex-col", "items-stretch", "max-h-full", "min-h-full");*/
+        
+        tabs = new Tabs(
+        		eleves,
+                parents,
+                enseignants,
+                activites,
+                notes,
+                bulletin,
+                paiements,
+               dashboard
+        	);
+        	tabs.setOrientation(Tabs.Orientation.VERTICAL);
         
 
         addToDrawer(new VerticalLayout(
-            section
+            tabs
         ));
     }
     

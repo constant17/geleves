@@ -36,6 +36,7 @@ public class EnseignantsListView extends VerticalLayout {
     ConfirmDialog warningDialog;
 
     public EnseignantsListView(GelevesService service) {
+    	MainLayout.tabs.setSelectedIndex(MainLayout.ENS_TAB);
         this.service = service;
         addClassName("list-view");
         setSizeFull();

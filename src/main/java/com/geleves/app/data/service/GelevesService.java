@@ -6,16 +6,22 @@ import com.geleves.app.data.entity.Classe;
 import com.geleves.app.data.entity.Cours;
 import com.geleves.app.data.entity.Eleve;
 import com.geleves.app.data.entity.Enseignant;
+import com.geleves.app.data.entity.Etablissement;
 import com.geleves.app.data.entity.Niveau;
+import com.geleves.app.data.entity.Note;
 import com.geleves.app.data.entity.Parent;
+import com.geleves.app.data.entity.Periode;
 import com.geleves.app.data.repository.ActeurRepository;
 import com.geleves.app.data.repository.ActiviteRepository;
 import com.geleves.app.data.repository.ClasseRepository;
 import com.geleves.app.data.repository.CoursRepository;
 import com.geleves.app.data.repository.EleveRepository;
 import com.geleves.app.data.repository.EnseignantRepository;
+import com.geleves.app.data.repository.EtablissementRepository;
 import com.geleves.app.data.repository.NiveauRepository;
+import com.geleves.app.data.repository.NoteRepository;
 import com.geleves.app.data.repository.ParentRepository;
+import com.geleves.app.data.repository.PeriodeRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -32,10 +38,15 @@ public class GelevesService {
     private final ActeurRepository acteurRepository;
     private final ActiviteRepository activiteRepository;
     private final NiveauRepository niveauRepository;
+    private final EtablissementRepository etablissementRepository;
+    private final NoteRepository noteRepository;
+    private final PeriodeRepository periodeRepository;
 
     public GelevesService(EleveRepository eleveRepository, ParentRepository parentRep, 
     		EnseignantRepository enseignantRep, CoursRepository coursRepository, ClasseRepository classeRepository,
-    		ActeurRepository acteurRepository, ActiviteRepository activiteRepository, NiveauRepository niveauRepository) {
+    		ActeurRepository acteurRepository, ActiviteRepository activiteRepository, NiveauRepository niveauRepository,
+    		EtablissementRepository etablissementRepository, NoteRepository noteRepository, PeriodeRepository periodeRepository) {
+    	
         this.eleveRepository = eleveRepository;
         this.parentRepository = parentRep;
         this.enseignantRepository = enseignantRep;
@@ -44,6 +55,9 @@ public class GelevesService {
         this.acteurRepository = acteurRepository;
         this.activiteRepository = activiteRepository;
         this.niveauRepository = niveauRepository;
+        this.etablissementRepository = etablissementRepository;
+        this.noteRepository = noteRepository;
+        this.periodeRepository = periodeRepository;
     }
 
     public List<Eleve> findAllEleves(String stringFilter) {
@@ -54,6 +68,12 @@ public class GelevesService {
         }
     }
 
+    public List<Eleve> findElevesByNiveau(int niveauId){
+    	return eleveRepository.findElevesByNiveau(niveauId);
+    }
+    public List<Eleve> findElevesByClasse(int classeId){
+    	return eleveRepository.findElevesByClasse(classeId);
+    }
     public long countEleves() {
         return eleveRepository.count();
     }
@@ -122,6 +142,11 @@ public class GelevesService {
     public List<Cours> findAllCours() {
             return coursRepository.findAll();
     }
+    
+    public List<Cours>findCoursByClasse(int classeId){
+		return coursRepository.findCoursByClasse(classeId);
+	}
+    
     public long countCours() {
         return coursRepository.count();
     }
@@ -141,6 +166,11 @@ public class GelevesService {
     public List<Classe> findAllClasses() {
 	    return classeRepository.findAll();
 	}
+    
+    public List<Classe> findClassesByNiveau(int niveauId){
+		return classeRepository.findClassesByNiveau(niveauId);
+	}
+    
 	public long countClasses() {
 	    return classeRepository.count();
 	}
@@ -198,6 +228,21 @@ public class GelevesService {
 	public List<Niveau> findAllNiveaux(){
 		return niveauRepository.findAll();
 	}
+	public Etablissement getEtablissement() {
+		if(etablissementRepository.findAll().isEmpty())
+			return null;
+		return etablissementRepository.findAll().get(0);
+	}
+	public List<Note> findAllNotes(){
+		return noteRepository.findAll();
+	}
 	
+	public List<Note>findNotesByEleve(int eleveId){
+		return noteRepository.findNotesByEleve(eleveId);
+	}
+	
+	public List<Periode> findAllPeriodes(){
+		return periodeRepository.findAll();
+	}
    
 }

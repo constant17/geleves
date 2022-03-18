@@ -23,3 +23,19 @@ a[highlight] {
             line-height: 1.3;
             white-space: pre;
         }
+
+.tab-class: active{
+	color:blue;
+}
+.school-name{
+	font-family:Verdana;
+	font-size: var(--lumo-font-size-xl);
+	font-weight: 800;
+	white-space: pre;
+}
+.bulletin-title{
+	width:100%;
+	padding: 5px;
+	background: #eee;
+	white-space: pre;
+}

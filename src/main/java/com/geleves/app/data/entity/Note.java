@@ -11,10 +11,14 @@ import com.geleves.app.data.AbstractEntity;
 public class Note extends AbstractEntity{
 
 	@NotNull
-	private String note;
+	private float note;
+	
+	private String type_dexamen;
 	
 	@NotNull
-	private String type_dexamen;
+	@ManyToOne
+	@JoinColumn(name="periode_id")
+	Periode periode;
 	
 	private String commentaire;
 	
@@ -30,14 +34,23 @@ public class Note extends AbstractEntity{
 	
 	@Override
 	public String toString() {
-		return type_dexamen+ " "+note;
+		return String.format("%.2f", note);
 	}
 
-	public String getNote() {
+	public float getNote() {
 		return note;
 	}
-
-	public void setNote(String note) {
+	
+	public String getCoefficientToString() {
+		return String.valueOf(matiere.getCoefficient());
+	}
+	public String getTotalPoints() {
+		return String.format("%.2f", (note * matiere.getCoefficient()));
+	}
+	public Enseignant getEnseignant() {
+		return matiere.getEnseignant();
+	}
+	public void setNote(float note) {
 		this.note = note;
 	}
 
@@ -72,6 +85,15 @@ public class Note extends AbstractEntity{
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
+
+	public Periode getPeriode() {
+		return periode;
+	}
+
+	public void setPeriode(Periode periode) {
+		this.periode = periode;
+	}
+
 	
 	
 }

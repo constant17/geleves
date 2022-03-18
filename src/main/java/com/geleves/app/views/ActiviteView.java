@@ -40,6 +40,7 @@ public class ActiviteView extends VerticalLayout{
     
 	@SuppressWarnings("deprecation")
 	public ActiviteView(GelevesService service) {
+		MainLayout.tabs.setSelectedIndex(MainLayout.ACTIVITES_TAB);
 		this.service = service;
 		form = new ActiviteForm(service.findAllActeurs());
 		

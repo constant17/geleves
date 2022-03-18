@@ -20,10 +20,6 @@ public class Niveau extends AbstractEntity {
 	
     @NotBlank
     private String niveau;
-    
-    @NotBlank
-    private String annee_scolaire;
- 
 
     @ManyToMany(mappedBy = "niveaux", fetch = FetchType.LAZY)
     private Set<Enseignant> enseignants = new HashSet<Enseignant>();
@@ -59,13 +55,6 @@ public class Niveau extends AbstractEntity {
         return enseignants;
     }
 
-	public String getAnnee_scolaire() {
-		return annee_scolaire;
-	}
-
-	public void setAnnee_scolaire(String annee_scolaire) {
-		this.annee_scolaire = annee_scolaire;
-	}
 
 	public void setEnseignants(Set<Enseignant> enseignants) {
 		this.enseignants = enseignants;

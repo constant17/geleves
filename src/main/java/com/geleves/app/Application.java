@@ -18,6 +18,7 @@ import org.vaadin.artur.helpers.LaunchUtil;
 @PWA(name = "Geleves", shortName = "Geleves", offlinePath="offline.html", offlineResources = { "./images/offline.png"})
 public class Application extends SpringBootServletInitializer implements AppShellConfigurator {
 
+	
     public static void main(String[] args) {
         LaunchUtil.launchBrowserInDevelopmentMode(SpringApplication.run(Application.class, args));
     }

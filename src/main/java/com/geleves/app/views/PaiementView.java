@@ -16,5 +16,9 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Paiement | Gélèves")
 @PermitAll
 public class PaiementView extends VerticalLayout {
+	
+	public PaiementView() {
+		MainLayout.tabs.setSelectedIndex(MainLayout.PAIEMENT_TAB);
+	}
 
 }

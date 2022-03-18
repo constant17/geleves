@@ -20,7 +20,7 @@ public class Cours extends AbstractEntity {
    
     private int nombreDHeuresParSemaine;
     
-    private int coefficient;
+    private byte coefficient;
     
     @NotBlank
     private String code;
@@ -41,8 +41,6 @@ public class Cours extends AbstractEntity {
     @NotNull
     private Niveau niveau;
     
-    
-
     @Override
     public String toString() {
         return code+": "+nom;
@@ -56,19 +54,12 @@ public class Cours extends AbstractEntity {
 		this.nom = nom;
 	}
 
-	public Niveau getNiveau() {
-		return niveau;
-	}
-
-	public void setNiveau(Niveau niveau) {
-		this.niveau = niveau;
-	}
 
 	public int getCoefficient() {
 		return coefficient;
 	}
 
-	public void setCoefficient(int coefficient) {
+	public void setCoefficient(byte coefficient) {
 		this.coefficient = coefficient;
 	}
 
@@ -105,6 +96,14 @@ public class Cours extends AbstractEntity {
 		this.classe = classe;
 	}
 
+	public Niveau getNiveau() {
+		return niveau;
+	}
+
+	public void setNiveau(Niveau niveau) {
+		this.niveau = niveau;
+	}
+	
 	
     
 }

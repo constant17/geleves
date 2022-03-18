@@ -1,22 +1,14 @@
 package com.geleves.app.views.list;
 
-import com.geleves.app.data.entity.Classe;
-import com.geleves.app.data.entity.Company;
 import com.geleves.app.data.entity.Eleve;
-import com.geleves.app.data.entity.Niveau;
-import com.geleves.app.data.entity.Parent;
-import com.geleves.app.data.entity.Status;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
@@ -24,53 +16,25 @@ import com.vaadin.flow.shared.Registration;
 
 import java.util.List;
 
-public class EleveForm extends FormLayout {
+public class NotesForm extends FormLayout {
   private Eleve eleve;
 
-  TextField prenom = new TextField("Prenom");
-  TextField nom = new TextField("Nom");
-  TextField addresse = new TextField("Addresse");
-  DatePicker dateDeNaissance = new DatePicker("Date de naissance");
-  DatePicker dateDInscription = new DatePicker("Date d'inscription");
-  ComboBox<Niveau> niveau = new ComboBox<>("Niveau");
-  ComboBox<Classe> classe = new ComboBox<>("Classe");
-  ComboBox<String> statut = new ComboBox<>("Statut");
-  
-  ComboBox<Parent> parent = new ComboBox<>("Parent");
-  
-  Binder<Eleve> binder = new BeanValidationBinder<>(Eleve.class);
 
   Button save = new Button("Sauvegarder");
   Button delete = new Button("Supprimer");
   Button close = new Button("Annuler");
 
-  public EleveForm(List<Parent> parents, List<Niveau> niveaux, List<String> statuts, List<Classe> classes_) {
+  public NotesForm() {
 	
     addClassName("eleve-form");
-    binder.bindInstanceFields(this);
+    //binder.bindInstanceFields(this);
     
     DatePicker.DatePickerI18n singleFormatI18n = new DatePicker.DatePickerI18n();
 	singleFormatI18n.setDateFormat("dd-MM-yyyy");
-	dateDeNaissance.setI18n(singleFormatI18n);
 	
-	classe.setItems(classes_);
-	statut.setItems(statuts);
 	
-    parent.setItems(parents);
-    parent.setItemLabelGenerator(Parent::toString);
     
-    niveau.setItems(niveaux);
-    niveau.setItemLabelGenerator(Niveau::toString);
-    
-    add(nom,
-        prenom,
-        dateDeNaissance,
-        dateDInscription,
-        addresse,
-        classe,
-        statut,
-        parent,
-        createButtonsLayout()); 
+    add(createButtonsLayout()); 
   }
 
   private HorizontalLayout createButtonsLayout() {
@@ -82,27 +46,27 @@ public class EleveForm extends FormLayout {
     close.addClickShortcut(Key.ESCAPE);
 
     save.addClickListener(event -> validateAndSave());
-    delete.addClickListener(event -> fireEvent(new DeleteEvent(this, eleve)));
-    close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+    //delete.addClickListener(event -> fireEvent(new DeleteEvent(this, eleve)));
+    //close.addClickListener(event -> fireEvent(new CloseEvent(this)));
 
 
-    binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
+    //binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
 
     return new HorizontalLayout(save, delete, close); 
   }
 
   public void setEleve(Eleve eleve) {
     this.eleve = eleve;
-    binder.readBean(eleve);
+    //binder.readBean(eleve);
   }
 
   private void validateAndSave() {
-    try {
-      binder.writeBean(eleve);
-      fireEvent(new SaveEvent(this, eleve));
-    } catch (ValidationException e) {
-      e.printStackTrace();
-    }
+    //try {
+      //binder.writeBean(eleve);
+      //fireEvent(new SaveEvent(this, eleve));
+   // } catch (ValidationException e) {
+   //   e.printStackTrace();
+    //}
   }
 
   // Events

@@ -36,6 +36,7 @@ public class ParentsListView extends VerticalLayout {
     ConfirmDialog warningDialog;
 
     public ParentsListView(GelevesService service) {
+    	MainLayout.tabs.setSelectedIndex(MainLayout.PARENTS_TAB);
         this.service = service;
         addClassName("list-view");
         setSizeFull();
